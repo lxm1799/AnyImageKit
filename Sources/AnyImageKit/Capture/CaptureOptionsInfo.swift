@@ -43,6 +43,8 @@ public struct CaptureOptionsInfo {
     public var preferredPresets: [CapturePreset] = CapturePreset.createPresets(enableHighResolution: false, enableHighFrameRate: true)
     ///是否点击录制视频，不用长按录制按钮，录制时间到点自动停掉
     public var isTapRecordVideo = false
+    ///自定义录像时顶部的view，记得背景颜色也需要设置一下
+    public var videoTopCustomView:UIView?
     /// 启用调试日志
     /// 默认：false
     public var enableDebugLog: Bool = false

@@ -77,6 +77,13 @@ final class CapturePreviewMaskView: UIView {
             maker.bottom.equalTo(snp.bottom)
             maker.height.equalTo(topMaskView.snp.height)
         }
+        
+        if let customView = self.options.videoTopCustomView {
+            topMaskView.layoutIfNeeded()
+            customView.frame = topMaskView.bounds
+            topMaskView.backgroundColor = customView.backgroundColor
+            topMaskView.addSubview(customView)
+        }
     }
 }
 
