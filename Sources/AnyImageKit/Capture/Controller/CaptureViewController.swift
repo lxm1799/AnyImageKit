@@ -213,8 +213,8 @@ extension CaptureViewController: CaptureButtonDelegate {
     
     func captureButtonDidBeganLongPress(_ button: CaptureButton) {
         if !self.options.isTapRecordVideo {
-            impactFeedback()
             delegate?.capture(self, isBeganRecord: true)
+            impactFeedback()
             toolView.hideButtons(animated: true)
             previewView.hideToolMask(animated: true)
             tipsView.hideTips(afterDelay: 0, animated: true)
