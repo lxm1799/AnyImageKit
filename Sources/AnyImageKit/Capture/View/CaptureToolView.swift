@@ -85,6 +85,11 @@ final class CaptureToolView: UIView {
             maker.size.equalTo(CGSize(width: 48, height: 48))
         }
     }
+    
+    ///更新录制视频按钮状态
+    func updataRecordBtnStatus(isRecord:Bool) {
+        captureButton.updataRecordBtnStatus(isRecord: isRecord)
+    }
 }
 
 // MARK: - Animation

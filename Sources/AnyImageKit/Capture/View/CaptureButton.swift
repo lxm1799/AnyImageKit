@@ -82,6 +82,15 @@ final class CaptureButton: UIControl {
             addGestureRecognizer(longPressGesture)
         }
     }
+    
+    ///更新录制视频按钮状态
+    func updataRecordBtnStatus(isRecord:Bool) {
+        if isRecord {
+            buttonView.setStyle(.recording, animated: true)
+        }else{
+            buttonView.setStyle(.normal, animated: true)
+        }
+    }
 }
 
 // MARK: - Animation

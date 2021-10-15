@@ -13,6 +13,8 @@ protocol CaptureViewControllerDelegate: AnyObject {
     
     func captureDidCancel(_ capture: CaptureViewController)
     func capture(_ capture: CaptureViewController, didOutput mediaURL: URL, type: MediaType)
+    
+    func capture(_ capture: CaptureViewController, isBeganRecord: Bool)
 }
 
 final class CaptureViewController: AnyImageViewController {
@@ -187,26 +189,48 @@ extension CaptureViewController {
 extension CaptureViewController: CaptureButtonDelegate {
     
     func captureButtonDidTapped(_ button: CaptureButton) {
-        guard !capture.isSwitchingCamera else { return }
-        impactFeedback()
-        button.startProcessing()
-        capture.capturePhoto()
+        
+        if self.options.isTapRecordVideo {
+            if recorder.isRunning {
+                toolView.captureButton.updataRecordBtnStatus(isRecord: false)
+                recorder.stopRunning()
+                button.startProcessing()
+            }else{
+                toolView.captureButton.updataRecordBtnStatus(isRecord: true)
+                impactFeedback()
+                tipsView.hideTips(afterDelay: 0, animated: true)
+                recorder.preferredAudioSettings = capture.recommendedAudioSetting
+                recorder.preferredVideoSettings = capture.recommendedVideoSetting
+                recorder.startRunning()
+            }
+        }else{
+            guard !capture.isSwitchingCamera else { return }
+            impactFeedback()
+            button.startProcessing()
+            capture.capturePhoto()
+        }
     }
     
     func captureButtonDidBeganLongPress(_ button: CaptureButton) {
-        impactFeedback()
-        toolView.hideButtons(animated: true)
-        previewView.hideToolMask(animated: true)
-        tipsView.hideTips(afterDelay: 0, animated: true)
-        recorder.preferredAudioSettings = capture.recommendedAudioSetting
-        recorder.preferredVideoSettings = capture.recommendedVideoSetting
-        recorder.startRunning()
+        if !self.options.isTapRecordVideo {
+            impactFeedback()
+            delegate?.capture(self, isBeganRecord: true)
+            toolView.hideButtons(animated: true)
+            previewView.hideToolMask(animated: true)
+            tipsView.hideTips(afterDelay: 0, animated: true)
+            recorder.preferredAudioSettings = capture.recommendedAudioSetting
+            recorder.preferredVideoSettings = capture.recommendedVideoSetting
+            recorder.startRunning()
+        }
     }
     
     func captureButtonDidEndedLongPress(_ button: CaptureButton) {
-        if recorder.isRunning {
-            recorder.stopRunning()
-            button.startProcessing()
+        if !self.options.isTapRecordVideo {
+            if recorder.isRunning {
+                recorder.stopRunning()
+                button.startProcessing()
+                delegate?.capture(self, isBeganRecord: false)
+            }
         }
     }
 }

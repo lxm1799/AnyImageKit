@@ -41,7 +41,8 @@ public struct CaptureOptionsInfo {
     /// iPadOS 环境下无效
     /// 默认支持从 1920*1080@60 开始查找支持的最佳分辨率
     public var preferredPresets: [CapturePreset] = CapturePreset.createPresets(enableHighResolution: false, enableHighFrameRate: true)
-    
+    ///是否点击录制视频，不用长按录制按钮，录制时间到点自动停掉
+    public var isTapRecordVideo = false
     /// 启用调试日志
     /// 默认：false
     public var enableDebugLog: Bool = false

@@ -13,6 +13,7 @@ public protocol ImageCaptureControllerDelegate: AnyObject {
     
     func imageCaptureDidCancel(_ capture: ImageCaptureController)
     func imageCapture(_ capture: ImageCaptureController, didFinishCapturing result: CaptureResult)
+    func imageCapture(_ capture: ImageCaptureController, isBeganRecord: Bool)
 }
 
 extension ImageCaptureControllerDelegate {
@@ -85,6 +86,10 @@ extension ImageCaptureController {
  
 // MARK: - CaptureViewControllerDelegate
 extension ImageCaptureController: CaptureViewControllerDelegate {
+    
+    func capture(_ capture: CaptureViewController, isBeganRecord: Bool) {
+        captureDelegate?.imageCapture(self, isBeganRecord: isBeganRecord)
+    }
     
     func captureDidCancel(_ capture: CaptureViewController) {
         captureDelegate?.imageCaptureDidCancel(self)
