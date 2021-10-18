@@ -92,6 +92,9 @@ extension CaptureConfigViewController: ImageKitDataTrackDelegate {
 
 // MARK: - ImageCaptureControllerDelegate
 extension CaptureConfigViewController: ImageCaptureControllerDelegate {
+    func imageCapture(_ capture: ImageCaptureController, isBeganRecord: Bool) {
+        
+    }
     
     func imageCapture(_ capture: ImageCaptureController, didFinishCapturing result: CaptureResult) {
         switch result.type {
